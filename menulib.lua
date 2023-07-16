@@ -1,5 +1,10 @@
 ---@diagnostic disable: undefined-global
-_DEBUG = true
+_DEBUG = true;
+local clipboard = require("neverlose/clipboard")
+local inspect
+if _DEBUG then
+    inspect = require("neverlose/inspect")
+end
 
 local helpers = {
     clone_table = function (t)
@@ -273,47 +278,4 @@ Menu.import = function (self, settings)
     end
 end
 
-local menu = Menu:new()
-local g1_idx = menu:add_group("Group", "Tab")
-local switch_idx = menu:add_element("Switch", "switch", g1_idx, {false})
-local subg1_idx = menu:add_group("Settings", nil, switch_idx);
-menu:add_element("Export", "button", subg1_idx, { function ()
-end })
-menu:add_element("Import", "button", subg1_idx, { function ()
-    menu:import(clipboard:get())
-end })
-
-menu:create_module("Modules", "Tab #2", {
-    {
-        name = "Cool",
-        {
-            name = "Cool Group",
-            {
-                name = "Switchy",
-                type = "switch",
-                options = { false }
-            }
-        }
-    },
-
-    {
-        name = "Even Cooler Stuff",
-        {
-            name = "Even Cooler Group",
-            {
-                name = "spida the slida",
-                type = "slider",
-                options = { 0, 10, 4 }
-            }
-        },
-        {
-            name = "Bigger, better, stronger, faster",
-            {
-                name = "Poopie the button",
-                type = "button",
-                options = {}
-            }
-        }
-    }
-})
-
+return Menu
